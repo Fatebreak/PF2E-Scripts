@@ -35,6 +35,7 @@ actionList = {
 
 def main():
     url = input("Enter Monster URL: ")
+    os.chdir("./Old")
     #url = "https://2e.aonprd.com/Monsters.aspx?ID=432"
     page = requests.get(url, timeout=None)
     tree = html.fromstring(page.content)
@@ -152,14 +153,16 @@ def makemd(url):
         finalstring += f"\n  - {item}: {statblock['saves'][i]}"
     finalstring += f"\n---\n\n[Archive Link]({url})\n\n```statblock\nmonster: {statblock['name']}\n```\n\n```encounter-table\nname: Encounter\ncreatures:\n  - {statblock['name']}\n```"
     finalstring = finalstring.replace("â", "\'")
-    print(finalstring)
+    with open(f"{statblock['name']}.md", "w") as f:
+        f.write(finalstring)
 
 
 def getthumbnail(tree, url):
     img = tree.xpath('//img[@class="thumbnail"]/@src')[0]
     img = requests.compat.urljoin(url, img)
     name = statblock["name"]
-    with open(f"z_Assets/Bestiary/BestiaryIMG - { name }.png", "wb") as f:
+    print(os.getcwd())
+    with open(f"BestiaryIMG - { name }.png", "wb") as f:
         f.write(requests.get(img).content)
 
 def getattacks(tree):
