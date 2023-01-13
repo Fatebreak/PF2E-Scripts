@@ -34,9 +34,9 @@ actionList = {
 }
 
 def main():
-    #url = input("Enter Monster URL: ")
+    url = input("Enter Monster URL: ")
     os.chdir(os.path.abspath("C:/Users/jtles/Documents/Pathfinder/Dying Light Campaign"))
-    url = "https://2e.aonprd.com/Monsters.aspx?ID=432"
+    #url = "https://2e.aonprd.com/Monsters.aspx?ID=432"
     page = requests.get(url, timeout=None)
     tree = html.fromstring(page.content)
     ilist = tree.xpath('//*[@id="main"]//*/text()')
